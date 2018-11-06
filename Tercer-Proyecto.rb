@@ -2,7 +2,6 @@ pila={
     tope:nil,
     vacia:true,
     llena:false,
-    max:-1,
     tamaño:0
 }
 cola={
@@ -10,16 +9,14 @@ cola={
     final:nil,
     vacia:true,
     llena:false,
-    max:-1,
     tamaño:0 
 }
 lista={
-        tope: nil,
-        fondo: nil,
-        vacia:true,
-        llena:false,
-        max:-1,
-        tamaño:0 
+    tope: nil,
+    fondo: nil,
+    vacia:true,
+    llena:false,
+    tamaño:0 
 }
 begin
 puts "Bienvenido al programa para ordenar numeros de diferentes formas"
