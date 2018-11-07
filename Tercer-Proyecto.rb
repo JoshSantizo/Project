@@ -36,56 +36,29 @@ puts "Bienvenido al programa para ordenar numeros de diferentes formas"
 puts "Seleccione el número de la opcion deseada"
 puts "1. Ingreso de numeros"
 puts "2. Mostrar datos ordenados de forma asendente"
-puts "3. Eliminar dato"
-puts "4. Seleccione la estructura para el ingreso de datos"
-puts "5. Mostrar los datos en forma asendente paso por paso"
-puts "6. Salir"
+puts "3. Ordenar paso a paso"
+puts "4. Salir"
 opcion=gets.chomp
 if opcion== '1'
     #Ingreso de numeros en todas las estructuras
 elsif opcion=='2'
     #Mostrar los datos de forma asendente en diferente estructura
-    puts "1. Listado asendente en una pila"
-    puts "2. Listado asendente en una cola"
-    puts "3. Listado asendente en una lista"
-    puts "4. Regresar"
-    opcion=gets.chomp
-    if opcion=='1'
-        #mostrar de forma asendente los datos de la pila
-    elsif opcion=='2'
-        #mostrar de forma asendente los datos de la cola
-    elsif opcion=='3'
-        #mostrar de forma asendente los datos de la lista
-    elsif opcion=='4'
-        #regresar
-    end
 elsif opcion=='3'
-    #Eliminiar el valor que desee el usuario de cada estructura
-elsif opcion=='4'
-    #Ingreso de datos en la estructura que desee el usuario
-    puts "1. Ingreso de datos en una pila"
-    puts "2. Ingreso de datos en una cola"
-    puts "3. Ingreso de datos en una lista"
-    puts "4. Regresar"
-    opcion=gets.chomp
-    if opcion=='1'
-        #ingreso de datos por  medio de una pila
-    elsif opcion=='2'
-        #ingreso de datos por medio de una cola
-    elsif  opcion=='3'
-        puts "1. Ingresar datos antes"
-        puts "2. Ingresar datos despues"
-        opcion=gets.chomp
-        #ingreso de datos por medio de una lista
-        if opcion=='1'
-            #Ingreso antes
-        elsif opcion=='2'
-            #ingreso despues
-        end
-    elsif opcion=='4'
-       # regresar
+    puts '1. Mostrar Pila'
+    puts '2. Mostrar Cola'
+    puts '3. Mostrar Lista'
+
+    if opc == 1
+        #ordenar paso a paso pila
+    elsif opc == 2
+        #ordenar paso a paso cola
+    elsif opc == 3
+        #ordenar paso a paso lista
+    else 
+        puts 'Ingrese nuevamente su opcion'
     end
-elsif opcion=='5'
-    #mostrar los datos en forma asendente , paso por paso
+
+elsif opcion=='4'
+    puts 'Fin del programa'
 end
-end while opcion != '6'
+end while opcion != '4'
