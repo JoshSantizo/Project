@@ -56,6 +56,11 @@ def insertar_pila(num, pila)
         pila[:tope] = elemento
     end    
 end
+def ingreso_en_un_arreglo(numeros)
+    nnumeros=numeros.split(',')
+    ttnumeros=nnumeros.size
+    convertir=nnumeros.map{|n|n.to_i}
+end
 begin
 puts "Bienvenido al programa para ordenar numeros de diferentes formas"
 puts "Seleccione el número de la opcion deseada"
@@ -66,6 +71,9 @@ puts "4. Salir"
 opcion=gets.chomp
 if opcion== '1'
     #Ingreso de numeros en todas las estructuras
+     puts "Ingrese los valores deseados, separandolos por una coma"
+    valor=gets.chomp
+    ingreso_en_un_arreglo(valor)
 elsif opcion=='2'
     #Mostrar los datos de forma asendente en diferente estructura
 elsif opcion=='3'
