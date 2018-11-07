@@ -18,6 +18,19 @@ lista={
     llena:false,
     tamaño:0 
 }
+def insertar_pila(num, pila)
+    elemento = {
+        valor: num,
+        siguiente: nil
+    }
+    if pila[:vacia] == true
+        pila[:tope] = elemento
+        pila[:vacia] = false
+    else
+        elemento[:siguiente] = pila[:tope]
+        pila[:tope] = elemento
+    end    
+end
 begin
 puts "Bienvenido al programa para ordenar numeros de diferentes formas"
 puts "Seleccione el número de la opcion deseada"
