@@ -1,15 +1,40 @@
+def limpiar
+    system('clear')
+end
+def insertar(cola)
+    limpiar
+    puts"Inserte Un Numero: "
+    x = gets.chomp.to_i
+    elemento = {
+        valor: x,
+        siguiente: nil
+    }
+    if cola[:esta_vacia] == true
+        cola[:tope] = elemento
+        cola[:fondo] = elemento
+        cola[:esta_vacia] = false
+        cola[:tamaño] = cola[:tamaño] +1
+    else
+        aux = cola[:fondo]
+        aux[:siguiente] = elemento
+        elemento[:siguiente] = nil
+        cola[:fondo] = elemento
+        cola[:tamaño] = cola[:tamaño] +1
+    end
+end
 pila={
     tope:nil,
     vacia:true,
     llena:false,
     tamaño:0
 }
-cola={
-    tope:nil,
-    final:nil,
-    vacia:true,
-    llena:false,
-    tamaño:0 
+cola = {
+    fondo: nil,
+    tope: nil,
+    max:-1,
+    esta_vacia: true,
+    tamaño:0,
+    esta_llena: false
 }
 lista={
     tope: nil,
