@@ -64,14 +64,6 @@ def insertar_pila(num, pila)
 end
 
 
-def ingreso_en_un_arreglo(numeros)
-    nnumeros=numeros.split(',')
-    ttnumeros=nnumeros.size
-    convertir=nnumeros.map{|n|n.to_i}
-end
-
-
-
 def obtener_posicion(lista, valor)
     i = 0
     aux = lista[:tope]
