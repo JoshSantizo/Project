@@ -79,8 +79,6 @@ def obtener_posicion(lista, valor)
 end
 
 
-
-
 def obtener_nodo(lista, posicion)
     nodo = {}
     i = 0
@@ -110,83 +108,6 @@ def insertar(cola)
     end
 end
 
-pila={
-    tope:nil,
-    vacia:true,
-    llena:false,
-    tamaño:0
-}
-
-cola = {
-    fondo: nil,
-    tope: nil,
-    max:-1,
-    esta_vacia: true,
-    tamaño:0,
-    esta_llena: false
-}
-
-lista={
-    tope: nil,
-    fondo: nil,
-    vacia:true,
-    llena:false,
-    tamaño:0 
-}
-
-
-def insertar_pila(num, pila)
-    elemento = {
-        valor: num,
-        siguiente: nil
-    }
-    if pila[:vacia] == true
-        pila[:tope] = elemento
-        pila[:vacia] = false
-    else
-        elemento[:siguiente] = pila[:tope]
-        pila[:tope] = elemento
-    end    
-end
-
-
-def obtener_posicion(lista, valor)
-    i = 0
-    aux = lista[:tope]
-    loop do
-      if aux[:valor][:carnet] == carnet || aux[:siguiente].nil?
-        break
-      end
-      i += 1
-      aux = aux[:siguiente]
-    end
-  
-    return i
-end
-
-
-
-
-def obtener_nodo(lista, posicion)
-    nodo = {}
-    i = 0
-    aux = lista[:tope]
-    loop do
-      if i == posicion
-        nodo = aux
-        return nodo
-      end
-      if aux[:siguiente] == nil
-        break
-      end
-      i += 1
-      aux = aux[:siguiente]
-    end
-    return nodo
-end
-
-
-
 def ordenar_lista(lista, a)
 
     for i in 0..tamaño do
@@ -215,10 +136,6 @@ def ordenar_lista(lista, a)
 
 end
     
-
-
-
-
     
 begin
     puts "Bienvenido al programa para ordenar numeros de diferentes formas"
