@@ -92,6 +92,92 @@ end
 def obtener_nodo(lista, posicion)
     nodo = {}
     i = 0
+def limpiar
+    system('clear')
+end
+
+def insertar(cola)
+    limpiar
+    puts"Inserte Un Numero: "
+    x = gets.chomp.to_i
+    elemento = {
+        valor: x,
+        siguiente: nil
+    }
+    if cola[:esta_vacia] == true
+        cola[:tope] = elemento
+        cola[:fondo] = elemento
+        cola[:esta_vacia] = false
+        cola[:tamaño] = cola[:tamaño] +1
+    else
+        aux = cola[:fondo]
+        aux[:siguiente] = elemento
+        elemento[:siguiente] = nil
+        cola[:fondo] = elemento
+        cola[:tamaño] = cola[:tamaño] +1
+    end
+end
+
+pila={
+    tope:nil,
+    vacia:true,
+    llena:false,
+    tamaño:0
+}
+
+cola = {
+    fondo: nil,
+    tope: nil,
+    max:-1,
+    esta_vacia: true,
+    tamaño:0,
+    esta_llena: false
+}
+
+lista={
+    tope: nil,
+    fondo: nil,
+    vacia:true,
+    llena:false,
+    tamaño:0 
+}
+
+
+def insertar_pila(num, pila)
+    elemento = {
+        valor: num,
+        siguiente: nil
+    }
+    if pila[:vacia] == true
+        pila[:tope] = elemento
+        pila[:vacia] = false
+    else
+        elemento[:siguiente] = pila[:tope]
+        pila[:tope] = elemento
+    end    
+end
+
+
+def obtener_posicion(lista, valor)
+    i = 0
+    aux = lista[:tope]
+    loop do
+      if aux[:valor][:carnet] == carnet || aux[:siguiente].nil?
+        break
+      end
+      i += 1
+      aux = aux[:siguiente]
+    end
+  
+    return i
+end
+
+
+
+
+def obtener_nodo(lista, posicion)
+    nodo = {}
+    i = 0
     aux = lista[:tope]
     loop do
       if i == posicion
@@ -106,8 +192,41 @@ def obtener_nodo(lista, posicion)
     end
     return nodo
 end
+
+
+
+def ordenar_lista(lista, a)
+
+    for i in 0..tamaño do
+        nodo_i = {
+            valor: a[i],
+            siguiente: nli
+        }  
+    end 
+
+    for i in 0..tamaño do
+        if lista[:tamaño] == 0
+            lista[:tope] = a[i] && lista[:final] = a[i]
+            lista[:vacia] = false
+            lista[:tamaño] += 1
+
+        else
+            if a[i] < a[i-1]
+                lista[:tope] = a[i]
+                lista[:final] = a[i-1]
+                lista[:tamaño] += 1
+            end                
+
+        end
+    end
+
+
+end
     
-    
+
+
+
+
     
 begin
     puts "Bienvenido al programa para ordenar numeros de diferentes formas"
@@ -121,6 +240,7 @@ begin
         #Ingreso de numeros en todas las estructuras
          puts "Ingrese los valores deseados, separandolos por una coma"
         a = gets.chomp.split(',').map{|n|n.to_i}
+        tamaño = a.size
     elsif opcion=='2'
         #Mostrar los datos de forma asendente en diferente estructura
     elsif opcion=='3'
