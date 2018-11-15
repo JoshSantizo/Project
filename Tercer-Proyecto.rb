@@ -58,7 +58,7 @@ def obtener_nodo(lista, posicion)
     end
     return nodo
 end
-def ordenar_lista(lista, arreglo, lista_aux)
+def ordenar_lista(lista, a, lista_aux)
     limpiar
     puts "Insertando: #{arreglo[0]}"
     insertar_lista(lista, arreglo[0])
@@ -121,6 +121,14 @@ cola = {
 }
 
 lista={
+    tope: nil,
+    fondo: nil,
+    vacia:true,
+    llena:false,
+    tamaño:0 
+}
+
+lista_aux={
     tope: nil,
     fondo: nil,
     vacia:true,
