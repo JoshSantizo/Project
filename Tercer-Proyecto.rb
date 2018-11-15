@@ -23,6 +23,83 @@ def insertar(cola)
         cola[:tamaño] = cola[:tamaño] +1
     end
 end
+def obtener_posicion(lista, valor)
+    i = 0
+    aux = lista[:tope]
+    loop do
+        if aux[:valor][:carnet] == carnet
+            break
+        elsif aux[:siguiente].nil?
+            i = nil
+            break
+        end
+      i += 1
+      aux = aux[:siguiente]
+    end
+  
+    return i
+end
+
+def obtener_nodo(lista, posicion)
+    nodo = {}
+    i = 0
+    aux = lista[:tope]
+    loop do
+        if i == posicion
+            nodo = aux
+            return nodo
+        end
+        
+        if aux[:siguiente] == nil
+            break
+        end
+        i += 1
+        aux = aux[:siguiente]
+    end
+    return nodo
+end
+def ordenar_lista(lista, arreglo, lista_aux)
+    limpiar
+    puts "Insertando: #{arreglo[0]}"
+    insertar_lista(lista, arreglo[0])
+    if arreglo.size > 1
+        for i in (1 .. arreglo.size - 1)
+            if lista[:tope][:valor] < arreglo[i]
+                for i in (1 .. lista[:tamaño])
+                    puts 'Vaciando lista'
+                    insertar_lista(lista[:tope][:valor], lista_aux)
+                    eliminar_lista(lista)
+                end
+                puts arreglo[i]
+                insertar_lista(arreglo[i], lista)
+                for i in (1 .. lista_aux[:tamaño])
+                    puts 'Insertando en lista' 
+                    insertar_lista(lista_aux[:tope][:valor], lista)
+                    eliminar_lista(lista_aux)
+                end
+            else
+               puts "Insertando: #{arreglo[i]}"
+               insertar_lista(arreglo[i], lista) 
+            end
+        end  
+    end
+end
+    
+
+def insertar_lista(lista, valor)
+    elemento = {
+        valor: valor,
+        siguiente: nil
+    }
+    if lista[:tope] == nil
+        lista[:tope] = elemento
+        lista[:final] = elemento
+    else
+        elemento[:siguiente] = lista[:tope]
+        lista[:tope] = elemento
+    end   
+    lista[:tamaño] += 1
+end
 
 pila_aux = {
     tope: nil,
@@ -119,25 +196,8 @@ def insertar_pila(num, pila)
 end
 
 
-def obtener_posicion(lista, valor)
-    i = 0
-    aux = lista[:tope]
-    loop do
-      if aux[:valor][:carnet] == carnet || aux[:siguiente].nil?
-        break
-      end
-      i += 1
-      aux = aux[:siguiente]
-    end
-  
-    return i
-end
 
 
-def obtener_nodo(lista, posicion)
-    nodo = {}
-    i = 0
-end
 
 def insertar(cola)
     limpiar
@@ -161,33 +221,7 @@ def insertar(cola)
     end
 end
 
-def ordenar_lista(lista, a)
 
-    for i in 0..tamaño do
-        nodo_i = {
-            valor: a[i],
-            siguiente: nli
-        }  
-    end 
-
-    for i in 0..tamaño do
-        if lista[:tamaño] == 0
-            lista[:tope] = a[i] && lista[:final] = a[i]
-            lista[:vacia] = false
-            lista[:tamaño] += 1
-
-        else
-            if a[i] < a[i-1]
-                lista[:tope] = a[i]
-                lista[:final] = a[i-1]
-                lista[:tamaño] += 1
-            end                
-
-        end
-    end
-
-
-end
     
     
 begin
