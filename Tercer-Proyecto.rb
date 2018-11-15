@@ -2,96 +2,6 @@ def limpiar
     system('clear')
 end
 
-def mostrar_cola(cola)
-    limpiar
-    if    cola[:esta_vacia]==true
-        puts "no hay datos"
-    else
-    elemento = cola[:tope]
-    puts elemento[:valor]
-  begin
-     nuevo_elemento = elemento[:siguiente]
-    nuevo_elemento [:valor]
-    elemento = nuevo_elemento
-    puts elemento[:valor]
-  end while elemento[:siguiente] != nil
-  gets
-end
-end
-def insertar(cola)
-    limpiar
-    
-    puts "Ingrese los valores deseados, separandolos por una coma"
-    a = gets.chomp.split(',').map{|n|n.to_i}
-
-    elemento = {
-        valor: a,
-        siguiente: nil
-    }
-    if cola[:esta_vacia] == true
-        cola[:tope] = elemento
-        cola[:fondo] = elemento
-        cola[:esta_vacia] = false
-        cola[:tamaño] = cola[:tamaño] +1
-    else
-        aux = cola[:fondo]
-        aux[:siguiente] = elemento
-        elemento[:siguiente] = nil
-        cola[:fondo] = elemento
-        cola[:tamaño] = cola[:tamaño] +1
-    end
-    def ordenamiento(a)
-       for i in 1..a.size-1
-        valor = a[i]
-        puts valor 
-        posicion = i
-        puts posicion 
-          while posicion > 0 && a[posicion-1] > valor
-            a[posicion] = a[posicion-1]
-            puts a[posicion]
-            puts a[posicion-1]
-            posicion = posicion - 1 
-            puts posicion
-            puts posicion-1
-          end
-        a[posicion] = valor 
-        puts a[posicion]
-        puts valor  
-        end
-      end 
-      
-   def ordenamiento2(a)
-    for i in 1..a.size - 1
-    valor = a[i]
-    posicion = i
-      while posicion < valor && a[posicion-1] < 0
-        a[posicion] = a[posicion-1]
-        posicion = posicion - 1 
-      end
-    a[posicion] = valor  
-    end
-  end 
-
-  
-      puts 'Opciones:'
-      puts '1.Ordenar ascendente'
-      puts '2.Ordenar Desendente'
-      opcn = gets.chomp 
-      if opcn == '1'
-        puts 'FORMA ASCENDENTE'     
-     
-         ordenamiento(a)
-       
-        print "#{a}"
-    end 
-    if opcn == '2'
-        ordenamiento2(a)
-        print "#{a.reverse}"
-    end 
-    
-
-end
-
 def insertar(cola)
     limpiar
     puts"Inserte Un Numero: "
@@ -114,11 +24,14 @@ def insertar(cola)
     end
 end
 
-pila={
-    tope:nil,
-    vacia:true,
-    llena:false,
-    tamaño:0
+pila_aux = {
+    tope: nil,
+    tamaño: 0
+}
+
+pila = {
+    tope: nil,
+    tamaño: 0
 }
 
 cola = {
@@ -138,7 +51,59 @@ lista={
     tamaño:0 
 }
 
+def eliminar_pila(pila)
+    aux = pila[:tope]
+    pila[:tope] = aux[:siguiente]
+    pila[:tamaño] -= 1
+end
 
+def insertar_pila(num, pila)
+    elemento = {
+        valor: num,
+        siguiente: nil
+    }
+    if pila[:tope] == nil
+         pila[:tope] = elemento
+    else
+        elemento[:siguiente] = pila[:tope]
+        pila[:tope] = elemento
+    end   
+    pila[:tamaño] += 1
+end
+def ordenar_pila(pila, arreglo, pila_aux)
+    limpiar
+    puts "Insertando: #{arreglo[0]}"
+    insertar_pila(arreglo[0], pila)
+    if arreglo.size > 1
+        for i in (1 .. arreglo.size - 1)
+            if pila[:tope][:valor] < arreglo[i]
+                for i in (1 .. pila[:tamaño])
+                    puts 'Vaciando pila'
+                    insertar_pila(pila[:tope][:valor], pila_aux)
+                    eliminar_pila(pila)
+                end
+                puts arreglo[i]
+                insertar_pila(arreglo[i], pila)
+                for i in (1 .. pila_aux[:tamaño])
+                    puts 'Insertando en pila' 
+                    insertar_pila(pila_aux[:tope][:valor], pila)
+                    eliminar_pila(pila_aux)
+                end
+            else
+               puts "Insertando: #{arreglo[i]}"
+               insertar_pila(arreglo[i], pila) 
+            end
+        end  
+    end
+    elemento = pila[:tope]
+    puts 'El orden quedara de la siguiente manera:'
+    begin 
+        puts "#{elemento[:valor]}"
+        elemento = elemento[:siguiente]
+    end while elemento[:siguiente] != nil
+    puts "#{elemento[:valor]}"
+    gets
+end
 def insertar_pila(num, pila)
     elemento = {
         valor: num,
@@ -172,8 +137,6 @@ end
 def obtener_nodo(lista, posicion)
     nodo = {}
     i = 0
-def limpiar
-    system('clear')
 end
 
 def insertar(cola)
@@ -228,48 +191,38 @@ end
     
     
 begin
-   puts "Bienvenido al programa para ordenar numeros de diferentes formas"
+    puts "Bienvenido al programa para ordenar numeros de diferentes formas"
     puts "Seleccione el número de la opcion deseada"
     puts "1. Ingreso de numeros"
     puts "2. Mostrar datos ordenados de forma asendente"
     puts "3. Ordenar paso a paso"
-    puts "4.Inserta el la cola/ordenamiento"
-    puts "5. Salir"
+    puts "4. Salir"
     opcion=gets.chomp
-    if opcion == '4'
-        insertar(cola)
-    end 
     if opcion== '1'
         #Ingreso de numeros en todas las estructuras
          puts "Ingrese los valores deseados, separandolos por una coma"
         a = gets.chomp.split(',').map{|n|n.to_i}
-        insertar_cola(cola,a)
+        tamaño = a.size
     elsif opcion=='2'
         #Mostrar los datos de forma asendente en diferente estructura
-        mostrar_cola(cola)
     elsif opcion=='3'
+        limpiar
         puts '1. Mostrar Pila'
         puts '2. Mostrar Cola'
         puts '3. Mostrar Lista'
-        opc = gets.chomp 
+        opc = gets.to_i
         if opc == 1
             #ordenar paso a paso pila
+            ordenar_pila(pila, a, pila_aux)
         elsif opc == 2
-            puts 'ordenar paso a paso cola'
-             puts "4.Inserta en la cola"
-             op= gets.chomp 
-            # op == '4'
-             if op == '4'
-                insertar(cola)
-            end 
+            #ordenar paso a paso cola
         elsif opc == 3
             #ordenar paso a paso lista
         else 
             puts 'Ingrese nuevamente su opcion'
         end
     
-    elsif opcion=='5'
+    elsif opcion=='4'
         puts 'Fin del programa'
     end
-end while opcion != '5'
-
+end while opcion != '4'
