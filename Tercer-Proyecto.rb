@@ -161,16 +161,16 @@ def ordenar_pila(pila, arreglo, pila_aux)
     insertar_pila(arreglo[0], pila)
     if arreglo.size > 1
         for i in (1 .. arreglo.size - 1)
-            if pila[:tope][:valor] < arreglo[i]
+            if pila[:tope][:valor] > arreglo[i]
                 for i in (1 .. pila[:tamaño])
                     puts 'Vaciando pila'
                     insertar_pila(pila[:tope][:valor], pila_aux)
                     eliminar_pila(pila)
                 end
-                puts arreglo[i]
+                puts "Insertando #{arreglo[i]}"
                 insertar_pila(arreglo[i], pila)
                 for i in (1 .. pila_aux[:tamaño])
-                    puts 'Insertando en pila' 
+                    puts "Insertando en pila: #{pila_aux[:tope][:valor]}" 
                     insertar_pila(pila_aux[:tope][:valor], pila)
                     eliminar_pila(pila_aux)
                 end
@@ -181,31 +181,14 @@ def ordenar_pila(pila, arreglo, pila_aux)
         end  
     end
     elemento = pila[:tope]
-    puts 'El orden quedara de la siguiente manera:'
-    begin 
-        puts "#{elemento[:valor]}"
+    puts "Resultado final:"
+    begin
+        print "#{elemento[:valor]} -> "
         elemento = elemento[:siguiente]
     end while elemento[:siguiente] != nil
-    puts "#{elemento[:valor]}"
+    print "#{elemento[:valor]} \n"
     gets
 end
-def insertar_pila(num, pila)
-    elemento = {
-        valor: num,
-        siguiente: nil
-    }
-    if pila[:vacia] == true
-        pila[:tope] = elemento
-        pila[:vacia] = false
-    else
-        elemento[:siguiente] = pila[:tope]
-        pila[:tope] = elemento
-    end    
-end
-
-
-
-
 
 def insertar(cola)
     limpiar
@@ -267,4 +250,5 @@ begin
     elsif opcion=='4'
         puts 'Fin del programa'
     end
+    limpiar
 end while opcion != '4'
