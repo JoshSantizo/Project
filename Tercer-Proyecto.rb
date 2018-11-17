@@ -1,7 +1,8 @@
+require 'rubygems'
+require 'terminal-table/import'
 def limpiar
     system('clear')
 end
-
 def insertar(cola)
     limpiar
     puts"Inserte Un Numero: "
@@ -23,93 +24,6 @@ def insertar(cola)
         cola[:tamaño] = cola[:tamaño] +1
     end
 end
-def obtener_posicion(lista, valor)
-    i = 0
-    aux = lista[:tope]
-    loop do
-        if aux[:valor][:carnet] == carnet
-            break
-        elsif aux[:siguiente].nil?
-            i = nil
-            break
-        end
-      i += 1
-      aux = aux[:siguiente]
-    end
-  
-    return i
-end
-
-def obtener_nodo(lista, posicion)
-    nodo = {}
-    i = 0
-    aux = lista[:tope]
-    loop do
-        if i == posicion
-            nodo = aux
-            return nodo
-        end
-        
-        if aux[:siguiente] == nil
-            break
-        end
-        i += 1
-        aux = aux[:siguiente]
-    end
-    return nodo
-end
-def ordenar_lista(lista, a, lista_aux)
-    limpiar
-    puts "Insertando: #{arreglo[0]}"
-    insertar_lista(lista, arreglo[0])
-    if arreglo.size > 1
-        for i in (1 .. arreglo.size - 1)
-            if lista[:tope][:valor] < arreglo[i]
-                for i in (1 .. lista[:tamaño])
-                    puts 'Vaciando lista'
-                    insertar_lista(lista[:tope][:valor], lista_aux)
-                    eliminar_lista(lista)
-                end
-                puts arreglo[i]
-                insertar_lista(arreglo[i], lista)
-                for i in (1 .. lista_aux[:tamaño])
-                    puts 'Insertando en lista' 
-                    insertar_lista(lista_aux[:tope][:valor], lista)
-                    eliminar_lista(lista_aux)
-                end
-            else
-               puts "Insertando: #{arreglo[i]}"
-               insertar_lista(arreglo[i], lista) 
-            end
-        end  
-    end
-end
-    
-
-def insertar_lista(lista, valor)
-    elemento = {
-        valor: valor,
-        siguiente: nil
-    }
-    if lista[:tope] == nil
-        lista[:tope] = elemento
-        lista[:final] = elemento
-    else
-        elemento[:siguiente] = lista[:tope]
-        lista[:tope] = elemento
-    end   
-    lista[:tamaño] += 1
-end
-
-pila_aux = {
-    tope: nil,
-    tamaño: 0
-}
-
-pila = {
-    tope: nil,
-    tamaño: 0
-}
 
 cola = {
     fondo: nil,
@@ -128,18 +42,10 @@ lista={
     tamaño:0 
 }
 
-lista_aux={
-    tope: nil,
-    fondo: nil,
-    vacia:true,
-    llena:false,
-    tamaño:0 
-}
-
 def eliminar_pila(pila)
     aux = pila[:tope]
-    pila[:tope] = aux[:siguiente]
     pila[:tamaño] -= 1
+    pila[:tope] = aux[:siguiente]
 end
 
 def insertar_pila(num, pila)
@@ -155,39 +61,108 @@ def insertar_pila(num, pila)
     end   
     pila[:tamaño] += 1
 end
-def ordenar_pila(pila, arreglo, pila_aux)
+def ordenar_pila(arreglo)
     limpiar
-    puts "Insertando: #{arreglo[0]}"
-    insertar_pila(arreglo[0], pila)
-    if arreglo.size > 1
-        for i in (1 .. arreglo.size - 1)
-            if pila[:tope][:valor] > arreglo[i]
-                for i in (1 .. pila[:tamaño])
-                    puts 'Vaciando pila'
-                    insertar_pila(pila[:tope][:valor], pila_aux)
-                    eliminar_pila(pila)
-                end
-                puts "Insertando #{arreglo[i]}"
+    pila = {
+        tope: nil,
+        tamaño: 0
+    }
+    pila_menores = {
+        tope: nil,
+        tamaño: 0
+    }
+    pila_mayores = {
+        tope: nil,
+        tamaño: 0
+    }
+    cont = 0
+    rows = []
+    for i in (0 .. arreglo.length - 1)
+        vector_final = []
+        if pila[:tope] == nil
+            insertar_pila(arreglo[i], pila)
+            rows << [cont, "#{arreglo[i]}"]
+            cont += 1
+        else
+            if arreglo[i] >= pila[:tope][:valor]
                 insertar_pila(arreglo[i], pila)
-                for i in (1 .. pila_aux[:tamaño])
-                    puts "Insertando en pila: #{pila_aux[:tope][:valor]}" 
-                    insertar_pila(pila_aux[:tope][:valor], pila)
-                    eliminar_pila(pila_aux)
+                a = pila[:tope]
+                for i in (1 .. pila[:tamaño])
+                    vector_final.push(a[:valor])
+                    break if a[:siguiente] == nil
+                    a = a[:siguiente]
                 end
-            else
-               puts "Insertando: #{arreglo[i]}"
-               insertar_pila(arreglo[i], pila) 
+                vector_final = vector_final.join(" => ")
+                rows << [cont, vector_final]
+                cont += 1
+            elsif arreglo[i] < pila[:tope][:valor]
+                for i in (1 .. pila[:tamaño])
+                    rows << [cont, "voy vaciando mi pila"]
+                    cont += 1
+                    if pila[:tope][:valor] < arreglo[i]
+                        insertar_pila(pila[:tope][:valor], pila_menores)
+                        eliminar_pila(pila)
+                    elsif pila[:tope][:valor] > arreglo[i]
+                        insertar_pila(pila[:tope][:valor], pila_mayores)
+                        eliminar_pila(pila)
+                    end
+                end
+                for i in (1 .. pila_menores[:tamaño])
+                    rows << [cont, "voy vaciando mi pila menores"]
+                    cont += 1
+                    insertar_pila(pila_menores[:tope][:valor], pila)
+                    rows << [cont, " E inserto en pila#{pila_menores[:tope][:valor]}"]
+                    cont += 1
+                    eliminar_pila(pila_menores)
+                end
+                rows << [cont, "Inserto en mi pila #{arreglo[i]}"]
+                cont += 1
+                insertar_pila(arreglo[i], pila)
+                for i in (1 .. pila_mayores[:tamaño])
+                    rows << [cont, "voy vaciando mi pila mayores"]
+                    cont += 1
+                    insertar_pila(pila_mayores[:tope][:valor], pila)
+                    rows << [cont, "E inserto en pila #{pila_mayores[:tope][:valor]}"]
+                    cont += 1
+                    eliminar_pila(pila_mayores)
+                end
             end
-        end  
+        end
     end
-    elemento = pila[:tope]
-    puts "Resultado final:"
-    begin
-        print "#{elemento[:valor]} -> "
-        elemento = elemento[:siguiente]
-    end while elemento[:siguiente] != nil
-    print "#{elemento[:valor]} \n"
+    vector_fina = []
+    b = pila[:tope]
+    for i in (1 .. pila[:tamaño])
+        vector_fina.push(b[:valor])
+        break if b[:siguiente] == nil
+        b = b[:siguiente]
+    end
+    vector_fina = vector_fina.join(" => ")
+    rows << [cont, "Ordenamiento final: #{vector_fina}"]
+    cont += 1
+    table = Terminal::Table.new :headings => ['Iteración', 'Estructura de datos como iria quedando'],:rows => rows
+    puts table
     gets
+end
+
+
+def obtener_posicion(lista, valor)
+    i = 0
+    aux = lista[:tope]
+    loop do
+      if aux[:valor][:carnet] == carnet || aux[:siguiente].nil?
+        break
+      end
+      i += 1
+      aux = aux[:siguiente]
+    end
+  
+    return i
+end
+
+
+def obtener_nodo(lista, posicion)
+    nodo = {}
+    i = 0
 end
 
 def insertar(cola)
@@ -212,7 +187,33 @@ def insertar(cola)
     end
 end
 
+def ordenar_lista(lista, a)
 
+    for i in 0..tamaño do
+        nodo_i = {
+            valor: a[i],
+            siguiente: nli
+        }  
+    end 
+
+    for i in 0..tamaño do
+        if lista[:tamaño] == 0
+            lista[:tope] = a[i] && lista[:final] = a[i]
+            lista[:vacia] = false
+            lista[:tamaño] += 1
+
+        else
+            if a[i] < a[i-1]
+                lista[:tope] = a[i]
+                lista[:final] = a[i-1]
+                lista[:tamaño] += 1
+            end                
+
+        end
+    end
+
+
+end
     
     
 begin
@@ -238,7 +239,7 @@ begin
         opc = gets.to_i
         if opc == 1
             #ordenar paso a paso pila
-            ordenar_pila(pila, a, pila_aux)
+            ordenar_pila(a)
         elsif opc == 2
             #ordenar paso a paso cola
         elsif opc == 3
@@ -250,5 +251,4 @@ begin
     elsif opcion=='4'
         puts 'Fin del programa'
     end
-    limpiar
 end while opcion != '4'
