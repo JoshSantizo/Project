@@ -38,12 +38,8 @@ for i in 0..a.size-1
       colaux[:tamaño] = cola[:tamaño] +1
       c=elemento
   else
-   # elemento_final = cola[:fondo]
-   # elemento_final[:siguiente] = elemento
-   # cola[:fondo] = elemento
   if cola[:tope][:valor]>elemento[:valor]
     if colaux[:fondo][:valor] > elemento[:valor]
-      #puts "##########################"
       aux=colaux[:fondo]
       aux3=aux[:siguiente]
       aux[:siguiente]=elemento
@@ -52,50 +48,29 @@ for i in 0..a.size-1
       aux2=cola[:tope]
       aux2[:siguiente]=colaux[:tope]
       cola[:tope]=aux2
-    # puts "jjjjjjjj"
-    # puts "##########################"
+  
     elsif colaux[:tope][:valor] < elemento[:valor]
-      #puts " ///////////////////// "
+    
        aux=colaux[:tope]
       colaux[:tope]=elemento
       elemento[:siguiente]=aux
       aux2=cola[:tope]
       aux2[:siguiente]=colaux[:tope]
       cola[:tope]=aux2
-     #puts " ///////////////////// "
+
     elsif colaux[:fondo][:valor]<elemento[:valor] && colaux[:tope][:siguiente][:valor] < elemento[:valor]
-     # puts a[i]
-      #puts "))))))))))))))))))"
+    
        aux=colaux[:tope]
        aux2=aux[:siguiente]
        aux[:siguiente]=elemento
        elemento[:siguiente]=aux2
        colaux[:tope]=aux
-      #puts "dato perdido"
-      #puts "))))))))))))))))))"
-      #puts cola[:tope]
-      #puts cola[:fondo]
-      #puts colaux[:tope]
-      #puts colaux[:fondo]
-      #puts elemento
-      #puts "))))))))))))))))))"
-    else
-      #puts "***********************"
-      #puts cola[:tope]
-     # puts cola[:fondo]
-     # puts colaux[:tope]
-     # puts colaux[:fondo]
-     # puts elemento
-     # puts "************************"
     end
   elsif cola[:tope][:valor]<elemento[:valor]
     if cola[:tope][:valor]<elemento[:valor]
-     # puts "++++++"
-     # puts "el nuuuummeeerooo"
-     # puts a[i]
-     # puts "++++++"
+   
       if elemento[:valor] < colaux[:tope] [:valor]
-      #    puts "llllllllllllllllllllllllll"
+   
            ll=cola[:tope]
            ll2=colaux[:tope]
           elemento
@@ -103,24 +78,14 @@ for i in 0..a.size-1
           cola[:tope]=ll2
           ll2[:siguiente]=elemento
           colaux[:tope]=ll2
-          #puts "llllllllllllllllllllllllll"
+  
       else
-        #  puts "oooooooooooooooooooooooooooo"
-      #puts ll=cola[:tope]
-      #puts ll[:siguiente]=colaux[:tope]
-      #puts colaux[:tope]=ll
        aux=elemento
        aux[:siguiente]=colaux[:tope]
        cola[:tope]=aux
        cola[:fondo]=aux
-      #puts "oooooooooooooooooooooooooooo"
+   
       end
-      #puts colaux[:tope]=ll
-      #puts aux=elemento
-      #puts aux[:siguiente]=colaux[:tope]
-      #puts cola[:tope]=aux
-     # puts cola[:fondo]=aux
-     # puts "++++++"
     elsif cola[:tope][:valor]>elemento[:valor]
       puts "&&&&&&&&&&&&&&&&"
       puts "dato perdido"
@@ -129,14 +94,6 @@ for i in 0..a.size-1
   end
 end
 end
-#puts "cola original"
-#puts cola[:fondo]
-#puts "cola 1"
-#puts colaux[:fondo]
-#puts "tope de colaux"
-#puts colaux[:tope][:valor]
-#puts "tope de cola"
-#puts cola[:tope][:valor]
 end
 
 colaux = {
