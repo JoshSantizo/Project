@@ -701,8 +701,12 @@ begin
         limpiar
     elsif opcion=='2'
        #Mostrar los datos de forma asendente en diferente estructura
+       puts "----------------------------"
        puts "Los datos de la cola"
-      mostrar_cola(cola)
+       mostrar_cola(cola)
+       puts "----------------------------"
+       puts "Los datos de la pila"
+       ordenar_pila(a)
     elsif opcion=='3'
         limpiar
         puts '1. Mostrar Pila'
@@ -716,6 +720,7 @@ begin
         elsif opc == 2
             #ordenar paso a paso cola
           opcion=0
+          puts "Datos de la cola"
 while opcion != '10'
 puts 'Listado de Opciones:'
 puts '1.Inserta el elemento1'
