@@ -67,7 +67,6 @@ for i in 0..a.size-1
        colaux[:tope]=aux
     end
   elsif cola[:tope][:valor]<elemento[:valor]
-    if cola[:tope][:valor]<elemento[:valor]
    
       if elemento[:valor] < colaux[:tope] [:valor]
    
@@ -86,11 +85,6 @@ for i in 0..a.size-1
        cola[:fondo]=aux
    
       end
-    elsif cola[:tope][:valor]>elemento[:valor]
-      puts "&&&&&&&&&&&&&&&&"
-      puts "dato perdido"
-      puts "&&&&&&&&&&&&&&&&&"
-    end
   end
 end
 end
