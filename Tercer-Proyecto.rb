@@ -602,6 +602,7 @@ begin
         puts '1. Mostrar Pila'
         puts '2. Mostrar Cola'
         puts '3. Mostrar Lista'
+        puts '5.Resumen'
         opc = gets.to_i
         if opc == 1
             #ordenar paso a paso pila
@@ -656,7 +657,32 @@ end
         elsif opc == 3
             #ordenar paso a paso lista
         else
-            puts 'Ingrese nuevamente su opcion'
+            #puts 'Ingrese nuevamente su opcion'
+             opc == '5'
+            $Pasos_pila = rows.size 
+            #puts 'Ingrese nuevamente su opcion'
+            puts 'RESUMEN'
+            puts 'Cantidad de Pasos:'
+            #puts rows.size 
+            puts 'El Ordenamiento necesito:'
+            puts '-2 Pilas Menores'
+            puts '-2 Pilas Mayores'
+            puts 'Para ser unidas en una Pila central'
+            #puts $Pasos_pila
+            puts 'Al ser ingresado el arreglo de numeros '
+            puts 'Estos fueron clasificados en las diferentes pilas que hubieron'
+            puts 'Por medio de sus requisitos establecidos'
+            puts 'Para poder ser llamados para los diferentes pasos requeridos para el ordenamiento '
+            puts 'Al ser sometidos a una serie de instrucciones, comprobando que hayan seguido las instruciones estos son ordenados'
+            puts 'Para ser mostrados de forma Ascendente/Descendente '
+            puts 'RESUMEN'
+            puts 'COLAS'
+            puts 'Se crearon 4 pilas en cada una se almacenadan los datos'
+            puts 'Estos fueron llamados uno por uno para ser comparados con otros'
+            puts 'Asi ir cumpliendo una serie de intruciones'
+            puts 'Y poder ser ordenados de forma Ascdente/Descendente'
+            puts 'Poder ser mostrados ya ordenados'
+
         end
 
     elsif opcion=='4'
