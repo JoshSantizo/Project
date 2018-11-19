@@ -129,8 +129,8 @@ for i in 0..a.size-1
   end
 end
 end
-puts "cola original"
-puts cola[:fondo]
+#puts "cola original"
+#puts cola[:fondo]
 #puts "cola 1"
 #puts colaux[:fondo]
 #puts "tope de colaux"
@@ -144,11 +144,7 @@ colaux = {
   tope: nil,
   tamaño:0
 }
-colaux2 = {
-  fondo: nil,
-  tope: nil,
-  tamaño:0
-}
+
 cola = {
     fondo: nil,
     tope: nil,
