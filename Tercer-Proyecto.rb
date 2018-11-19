@@ -3,28 +3,152 @@ require 'terminal-table/import'
 def limpiar
     system('clear')
 end
-def insertar(cola)
-    limpiar
-    puts"Inserte Un Numero: "
-    x = gets.chomp.to_i
-    elemento = {
-        valor: x,
-        siguiente: nil
-    }
-    if cola[:esta_vacia] == true
-        cola[:tope] = elemento
-        cola[:fondo] = elemento
-        cola[:esta_vacia] = false
-        cola[:tamaño] = cola[:tamaño] +1
+def mostrar_cola(cola)
+  limpiar
+  if    cola[:esta_vacia]==true
+      puts "no hay datos"
+  else
+  elemento = cola[:tope]
+  puts elemento[:valor]
+begin
+   nuevo_elemento = elemento[:siguiente]
+  nuevo_elemento [:valor]
+  elemento = nuevo_elemento
+  puts elemento[:valor]
+end while elemento[:siguiente] != nil
+gets
+end
+end
+def insertar_en_las_colas(cola,a,colaux)
+  limpiar
+for i in 0..a.size-1
+  elemento = {
+      valor: a[i],
+      siguiente: nil
+  }
+  if cola[:esta_vacia] == true
+      cola[:tope] = elemento
+      cola[:fondo] = elemento
+      cola[:esta_vacia] = false
+      cola[:tamaño] = cola[:tamaño] +1
+  elsif cola[:tamaño]==1
+      colaux[:tope] = elemento
+      colaux[:fondo] = elemento
+      cola[:tamaño] = cola[:tamaño] +1
+      colaux[:tamaño] = cola[:tamaño] +1
+      c=elemento
+  else
+   # elemento_final = cola[:fondo]
+   # elemento_final[:siguiente] = elemento
+   # cola[:fondo] = elemento
+  if cola[:tope][:valor]>elemento[:valor]
+    if colaux[:fondo][:valor] > elemento[:valor]
+      #puts "##########################"
+      aux=colaux[:fondo]
+      aux3=aux[:siguiente]
+      aux[:siguiente]=elemento
+      colaux[:fondo]=elemento
+      elemento[:siguiente]=aux3
+      aux2=cola[:tope]
+      aux2[:siguiente]=colaux[:tope]
+      cola[:tope]=aux2
+    # puts "jjjjjjjj"
+    # puts "##########################"
+    elsif colaux[:tope][:valor] < elemento[:valor]
+      #puts " ///////////////////// "
+       aux=colaux[:tope]
+      colaux[:tope]=elemento
+      elemento[:siguiente]=aux
+      aux2=cola[:tope]
+      aux2[:siguiente]=colaux[:tope]
+      cola[:tope]=aux2
+     #puts " ///////////////////// "
+    elsif colaux[:fondo][:valor]<elemento[:valor] && colaux[:tope][:siguiente][:valor] < elemento[:valor]
+     # puts a[i]
+      #puts "))))))))))))))))))"
+       aux=colaux[:tope]
+       aux2=aux[:siguiente]
+       aux[:siguiente]=elemento
+       elemento[:siguiente]=aux2
+       colaux[:tope]=aux
+      #puts "dato perdido"
+      #puts "))))))))))))))))))"
+      #puts cola[:tope]
+      #puts cola[:fondo]
+      #puts colaux[:tope]
+      #puts colaux[:fondo]
+      #puts elemento
+      #puts "))))))))))))))))))"
     else
-        aux = cola[:fondo]
-        aux[:siguiente] = elemento
-        elemento[:siguiente] = nil
-        cola[:fondo] = elemento
-        cola[:tamaño] = cola[:tamaño] +1
+      #puts "***********************"
+      #puts cola[:tope]
+     # puts cola[:fondo]
+     # puts colaux[:tope]
+     # puts colaux[:fondo]
+     # puts elemento
+     # puts "************************"
     end
+  elsif cola[:tope][:valor]<elemento[:valor]
+    if cola[:tope][:valor]<elemento[:valor]
+     # puts "++++++"
+     # puts "el nuuuummeeerooo"
+     # puts a[i]
+     # puts "++++++"
+      if elemento[:valor] < colaux[:tope] [:valor]
+      #    puts "llllllllllllllllllllllllll"
+           ll=cola[:tope]
+           ll2=colaux[:tope]
+          elemento
+           elemento[:siguiente]=ll
+          cola[:tope]=ll2
+          ll2[:siguiente]=elemento
+          colaux[:tope]=ll2
+          #puts "llllllllllllllllllllllllll"
+      else
+        #  puts "oooooooooooooooooooooooooooo"
+      #puts ll=cola[:tope]
+      #puts ll[:siguiente]=colaux[:tope]
+      #puts colaux[:tope]=ll
+       aux=elemento
+       aux[:siguiente]=colaux[:tope]
+       cola[:tope]=aux
+       cola[:fondo]=aux
+      #puts "oooooooooooooooooooooooooooo"
+      end
+      #puts colaux[:tope]=ll
+      #puts aux=elemento
+      #puts aux[:siguiente]=colaux[:tope]
+      #puts cola[:tope]=aux
+     # puts cola[:fondo]=aux
+     # puts "++++++"
+    elsif cola[:tope][:valor]>elemento[:valor]
+      puts "&&&&&&&&&&&&&&&&"
+      puts "dato perdido"
+      puts "&&&&&&&&&&&&&&&&&"
+    end
+  end
+end
+end
+puts "cola original"
+puts cola[:fondo]
+#puts "cola 1"
+#puts colaux[:fondo]
+#puts "tope de colaux"
+#puts colaux[:tope][:valor]
+#puts "tope de cola"
+#puts cola[:tope][:valor]
 end
 
+colaux = {
+  fondo: nil,
+  tope: nil,
+  tamaño:0
+}
+colaux2 = {
+  fondo: nil,
+  tope: nil,
+  tamaño:0
+}
 cola = {
     fondo: nil,
     tope: nil,
@@ -41,7 +165,102 @@ lista={
     llena:false,
     tamaño:0
 }
+def obtener_posicion(lista, valor)
+    i = 0
+    aux = lista[:tope]
+    loop do
+      if aux[:valor] == valor
+        break
+      elsif aux[:siguiente].nil?
+        i = nil
+        break
+      end
+      i += 1
+      aux = aux[:siguiente]
+    end
+    return i
+end
 
+def obtener_nodo(lista, posicion)
+    nodo = nil
+    i = 0
+    aux = lista[:tope]
+    loop do
+        if i == posicion
+            nodo = aux
+            return nodo
+        end
+        if aux[:siguiente] == nil
+            break
+        end
+        i += 1
+        aux = aux[:siguiente]
+    end
+    return nodo
+end
+def obtener_valor(lista, posicion)
+    nodo = nil
+    i = 0
+    aux = lista[:tope][:valor]
+    loop do
+        if i == posicion
+            valor = aux
+            return valor
+        end
+        if aux[:siguiente] == nil
+            break
+        end
+        i += 1
+        aux = aux[:siguiente]
+    end
+    return valor
+end
+
+def ordenar_lista(lista, a)
+    for i in 0..(a.size - 1) do
+        nodo = {
+            valor: a[i],
+            siguiente: nil
+        }
+        posicion = obtener_posicion(lista, a[i])
+        posicion_anterior = obtener_posicion(lista, a[i-1])
+        nod = obtener_nodo(lista, posicion)
+        nod_anterior = obtener_nodo(lista, (posicion-1))
+        nod_siguiente = obtener_nodo(lista, (posicion+1))
+        val = obtener_valor(lista, posicion)
+        val_anterior = obtener_valor(lista, (posicion-1))
+        if lista[:tope] == nil && lista[:final] == nil
+            lista[:tope] = nodo
+            lista[:final] = nodo
+            lista[:vacia] = false
+            lista[:size] += 1
+
+        elsif lista[:size] >= 1  #insertar entre numeros
+            aux = lista[:tope]
+            loop do
+                if val < val_anterior && posicion_anterior == nil 
+                    lista[:tope] = nodo
+                    nodo = nod_siguiente
+                    lista[:size] += 1
+                    break
+                elsif val < val_anterior 
+                    nod_anterior = nodo
+                    nodo = nod_siguiente
+                    lista[:size] += 1
+                    break
+                elsif valor > val_anterior
+                    nod_anterior = nodo
+                    nodo = nil
+                    lista[:final] = nodo
+                    break
+                end
+                aux = aux[:siguiente]
+            end
+            
+        end
+    end
+    
+end
 def eliminar_pila(pila)
     aux = pila[:tope]
     pila[:tamaño] -= 1
@@ -130,26 +349,6 @@ def ordenar_pila(arreglo)
   gets
   limpiar
 end
-
-def obtener_posicion(lista, valor)
-    i = 0
-    aux = lista[:tope]
-    loop do
-      if aux[:valor][:carnet] == carnet || aux[:siguiente].nil?
-        break
-      end
-      i += 1
-      aux = aux[:siguiente]
-    end
-
-    return i
-end
-
-def obtener_nodo(lista, posicion)
-    nodo = {}
-    i = 0
-end
-
 def insertar(cola)
     limpiar
     puts"Inserte Un Numero: "
@@ -171,35 +370,6 @@ def insertar(cola)
         cola[:tamaño] = cola[:tamaño] +1
     end
 end
-
-def ordenar_lista(lista, a)
-
-    for i in 0..tamaño do
-        nodo_i = {
-            valor: a[i],
-            siguiente: nli
-        }
-    end
-
-    for i in 0..tamaño do
-        if lista[:tamaño] == 0
-            lista[:tope] = a[i] && lista[:final] = a[i]
-            lista[:vacia] = false
-            lista[:tamaño] += 1
-
-        else
-            if a[i] < a[i-1]
-                lista[:tope] = a[i]
-                lista[:final] = a[i-1]
-                lista[:tamaño] += 1
-            end
-
-        end
-    end
-
-
-end
-
 def ver(cola)
     limpiar
 
@@ -578,16 +748,20 @@ begin
         limpiar
         puts "Ingrese los valores deseados, separandolos por una coma"
         a = gets.chomp.split(',').map{|n|n.to_i}
+        insertar_en_las_colas(cola,a,colaux)
         tamaño = a.size
         gets
         limpiar
     elsif opcion=='2'
-        #Mostrar los datos de forma asendente en diferente estructura
+       #Mostrar los datos de forma asendente en diferente estructura
+       puts "Los datos de la cola"
+      mostrar_cola(cola)
     elsif opcion=='3'
         limpiar
         puts '1. Mostrar Pila'
         puts '2. Mostrar Cola'
         puts '3. Mostrar Lista'
+        puts '5.Resumen'
         opc = gets.to_i
         if opc == 1
             #ordenar paso a paso pila
@@ -642,7 +816,32 @@ end
         elsif opc == 3
             #ordenar paso a paso lista
         else
-            puts 'Ingrese nuevamente su opcion'
+            #puts 'Ingrese nuevamente su opcion'
+             opc == '5'
+            $Pasos_pila = rows.size
+            #puts 'Ingrese nuevamente su opcion'
+            puts 'RESUMEN'
+            puts 'Cantidad de Pasos:'
+            #puts rows.size
+            puts 'El Ordenamiento necesito:'
+            puts '-2 Pilas Menores'
+            puts '-2 Pilas Mayores'
+            puts 'Para ser unidas en una Pila central'
+            #puts $Pasos_pila
+            puts 'Al ser ingresado el arreglo de numeros '
+            puts 'Estos fueron clasificados en las diferentes pilas que hubieron'
+            puts 'Por medio de sus requisitos establecidos'
+            puts 'Para poder ser llamados para los diferentes pasos requeridos para el ordenamiento '
+            puts 'Al ser sometidos a una serie de instrucciones, comprobando que hayan seguido las instruciones estos son ordenados'
+            puts 'Para ser mostrados de forma Ascendente/Descendente '
+            puts 'RESUMEN'
+            puts 'COLAS'
+            puts 'Se crearon 4 pilas en cada una se almacenadan los datos'
+            puts 'Estos fueron llamados uno por uno para ser comparados con otros'
+            puts 'Asi ir cumpliendo una serie de intruciones'
+            puts 'Y poder ser ordenados de forma Ascdente/Descendente'
+            puts 'Poder ser mostrados ya ordenados'
+
         end
 
     elsif opcion=='4'
