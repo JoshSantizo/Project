@@ -165,7 +165,102 @@ lista={
     llena:false,
     tamaño:0
 }
+def obtener_posicion(lista, valor)
+    i = 0
+    aux = lista[:tope]
+    loop do
+      if aux[:valor] == valor
+        break
+      elsif aux[:siguiente].nil?
+        i = nil
+        break
+      end
+      i += 1
+      aux = aux[:siguiente]
+    end
+    return i
+end
 
+def obtener_nodo(lista, posicion)
+    nodo = nil
+    i = 0
+    aux = lista[:tope]
+    loop do
+        if i == posicion
+            nodo = aux
+            return nodo
+        end
+        if aux[:siguiente] == nil
+            break
+        end
+        i += 1
+        aux = aux[:siguiente]
+    end
+    return nodo
+end
+def obtener_valor(lista, posicion)
+    nodo = nil
+    i = 0
+    aux = lista[:tope][:valor]
+    loop do
+        if i == posicion
+            valor = aux
+            return valor
+        end
+        if aux[:siguiente] == nil
+            break
+        end
+        i += 1
+        aux = aux[:siguiente]
+    end
+    return valor
+end
+
+def ordenar_lista(lista, a)
+    for i in 0..(a.size - 1) do
+        nodo = {
+            valor: a[i],
+            siguiente: nil
+        }
+        posicion = obtener_posicion(lista, a[i])
+        posicion_anterior = obtener_posicion(lista, a[i-1])
+        nod = obtener_nodo(lista, posicion)
+        nod_anterior = obtener_nodo(lista, (posicion-1))
+        nod_siguiente = obtener_nodo(lista, (posicion+1))
+        val = obtener_valor(lista, posicion)
+        val_anterior = obtener_valor(lista, (posicion-1))
+        if lista[:tope] == nil && lista[:final] == nil
+            lista[:tope] = nodo
+            lista[:final] = nodo
+            lista[:vacia] = false
+            lista[:size] += 1
+
+        elsif lista[:size] >= 1  #insertar entre numeros
+            aux = lista[:tope]
+            loop do
+                if val < val_anterior && posicion_anterior == nil 
+                    lista[:tope] = nodo
+                    nodo = nod_siguiente
+                    lista[:size] += 1
+                    break
+                elsif val < val_anterior 
+                    nod_anterior = nodo
+                    nodo = nod_siguiente
+                    lista[:size] += 1
+                    break
+                elsif valor > val_anterior
+                    nod_anterior = nodo
+                    nodo = nil
+                    lista[:final] = nodo
+                    break
+                end
+                aux = aux[:siguiente]
+            end
+            
+        end
+    end
+    
+end
 def eliminar_pila(pila)
     aux = pila[:tope]
     pila[:tamaño] -= 1
@@ -268,26 +363,6 @@ def ordenar_pila(arreglo)
   gets
   limpiar
 end
-
-def obtener_posicion(lista, valor)
-    i = 0
-    aux = lista[:tope]
-    loop do
-      if aux[:valor][:carnet] == carnet || aux[:siguiente].nil?
-        break
-      end
-      i += 1
-      aux = aux[:siguiente]
-    end
-
-    return i
-end
-
-def obtener_nodo(lista, posicion)
-    nodo = {}
-    i = 0
-end
-
 def insertar(cola)
     limpiar
     puts"Inserte Un Numero: "
@@ -309,35 +384,6 @@ def insertar(cola)
         cola[:tamaño] = cola[:tamaño] +1
     end
 end
-
-def ordenar_lista(lista, a)
-
-    for i in 0..tamaño do
-        nodo_i = {
-            valor: a[i],
-            siguiente: nli
-        }
-    end
-
-    for i in 0..tamaño do
-        if lista[:tamaño] == 0
-            lista[:tope] = a[i] && lista[:final] = a[i]
-            lista[:vacia] = false
-            lista[:tamaño] += 1
-
-        else
-            if a[i] < a[i-1]
-                lista[:tope] = a[i]
-                lista[:final] = a[i-1]
-                lista[:tamaño] += 1
-            end
-
-        end
-    end
-
-
-end
-
 def ver(cola)
     limpiar
 
