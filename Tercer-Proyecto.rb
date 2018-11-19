@@ -72,19 +72,34 @@ def ordenar_pila(arreglo)
       tope: nil,
       tamaño: 0
   }
-  pila_mayores = {
-      tope: nil,
-      tamaño: 0
-  }
   rows = []
-  for i in (0 .. arreglo.length - 1)
-      vector_final = []
-      if pila[:tope] == nil
+  for i in (0 .. arreglo.size - 1)
+      if i == 0
           insertar_pila(arreglo[i], pila)
           rows << ["#{arreglo[i]}"]
+      elsif arreglo[i] >= pila[:tope][:valor]
+          insertar_pila(arreglo[i], pila)
+          vector_final = []
+          a = pila[:tope]
+          for i in (1 .. pila[:tamaño])
+              vector_final.push(a[:valor])
+              break if a[:siguiente] == nil
+              a = a[:siguiente]
+          end
+          vector_final = vector_final.join(" => ")
+          rows << [vector_final]
       else
-          if arreglo[i] >= pila[:tope][:valor]
-              insertar_pila(arreglo[i], pila)
+          rows << ["Puts vacio pila"]
+          for j in (1 .. pila[:tamaño])
+              break if arreglo[i] >= pila[:tope][:valor]
+              insertar_pila(pila[:tope][:valor], pila_menores)
+              eliminar_pila(pila)
+          end
+          rows << [arreglo[i]]
+          insertar_pila(arreglo[i], pila)
+          for i in (1 .. pila_menores[:tamaño])
+              insertar_pila(pila_menores[:tope][:valor], pila)
+              vector_final = []
               a = pila[:tope]
               for i in (1 .. pila[:tamaño])
                   vector_final.push(a[:valor])
@@ -93,43 +108,10 @@ def ordenar_pila(arreglo)
               end
               vector_final = vector_final.join(" => ")
               rows << [vector_final]
-          elsif arreglo[i] < pila[:tope][:valor]
-              for i in (1 .. pila[:tamaño])
-                  rows << ["voy vaciando mi pila"]
-                  if pila[:tope][:valor] < arreglo[i]
-                      insertar_pila(pila[:tope][:valor], pila_menores)
-                      eliminar_pila(pila)
-                  elsif pila[:tope][:valor] > arreglo[i]
-                      insertar_pila(pila[:tope][:valor], pila_mayores)
-                      eliminar_pila(pila)
-                  end
-              end
-              for i in (1 .. pila_menores[:tamaño])
-                  rows << ["voy vaciando mi pila menores"]
-                  insertar_pila(pila_menores[:tope][:valor], pila)
-                  rows << [" E inserto en pila#{pila_menores[:tope][:valor]}"]
-                  eliminar_pila(pila_menores)
-              end
-              rows << ["Inserto en mi pila #{arreglo[i]}"]
-              insertar_pila(arreglo[i], pila)
-              for i in (1 .. pila_mayores[:tamaño])
-                  rows << ["voy vaciando mi pila mayores"]
-                  insertar_pila(pila_mayores[:tope][:valor], pila)
-                  rows << ["E inserto en pila #{pila_mayores[:tope][:valor]}"]
-                  eliminar_pila(pila_mayores)
-              end
+              eliminar_pila(pila_menores)
           end
       end
   end
-  vector_fina = []
-  b = pila[:tope]
-  for i in (1 .. pila[:tamaño])
-      vector_fina.push(b[:valor])
-      break if b[:siguiente] == nil
-      b = b[:siguiente]
-  end
-  vector_fina = vector_fina.join(" => ")
-  rows << ["Ordenamiento final: #{vector_fina}"]
   table = Terminal::Table.new :headings => ['Iteración', 'Estructura de datos']
   puts table
   print "Desea ver el siguiente paso?, si es asi presione cualquier tecla si desa salir presione E "
@@ -137,10 +119,14 @@ def ordenar_pila(arreglo)
       pregunta = gets.chomp.upcase
       break if pregunta =='E'
       tabla = Terminal::Table.new do |t|
+      if i == rows.size - 1
+          puts 'Paso final: '
+      end
       t.add_row [i + 1, "#{rows[i]}"]
   end
       puts tabla
   end
+  gets
   gets
   limpiar
 end
