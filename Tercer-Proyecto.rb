@@ -39,7 +39,7 @@ lista={
     fondo: nil,
     vacia:true,
     llena:false,
-    tamaño:0 
+    tamaño:0
 }
 
 def eliminar_pila(pila)
@@ -58,92 +58,92 @@ def insertar_pila(num, pila)
     else
         elemento[:siguiente] = pila[:tope]
         pila[:tope] = elemento
-    end   
+    end
     pila[:tamaño] += 1
 end
-def ordenar_pila(arreglo)
-    limpiar
-    pila = {
-        tope: nil,
-        tamaño: 0
-    }
-    pila_menores = {
-        tope: nil,
-        tamaño: 0
-    }
-    pila_mayores = {
-        tope: nil,
-        tamaño: 0
-    }
-    cont = 0
-    rows = []
-    for i in (0 .. arreglo.length - 1)
-        vector_final = []
-        if pila[:tope] == nil
-            insertar_pila(arreglo[i], pila)
-            rows << [cont, "#{arreglo[i]}"]
-            cont += 1
-        else
-            if arreglo[i] >= pila[:tope][:valor]
-                insertar_pila(arreglo[i], pila)
-                a = pila[:tope]
-                for i in (1 .. pila[:tamaño])
-                    vector_final.push(a[:valor])
-                    break if a[:siguiente] == nil
-                    a = a[:siguiente]
-                end
-                vector_final = vector_final.join(" => ")
-                rows << [cont, vector_final]
-                cont += 1
-            elsif arreglo[i] < pila[:tope][:valor]
-                for i in (1 .. pila[:tamaño])
-                    rows << [cont, "voy vaciando mi pila"]
-                    cont += 1
-                    if pila[:tope][:valor] < arreglo[i]
-                        insertar_pila(pila[:tope][:valor], pila_menores)
-                        eliminar_pila(pila)
-                    elsif pila[:tope][:valor] > arreglo[i]
-                        insertar_pila(pila[:tope][:valor], pila_mayores)
-                        eliminar_pila(pila)
-                    end
-                end
-                for i in (1 .. pila_menores[:tamaño])
-                    rows << [cont, "voy vaciando mi pila menores"]
-                    cont += 1
-                    insertar_pila(pila_menores[:tope][:valor], pila)
-                    rows << [cont, " E inserto en pila#{pila_menores[:tope][:valor]}"]
-                    cont += 1
-                    eliminar_pila(pila_menores)
-                end
-                rows << [cont, "Inserto en mi pila #{arreglo[i]}"]
-                cont += 1
-                insertar_pila(arreglo[i], pila)
-                for i in (1 .. pila_mayores[:tamaño])
-                    rows << [cont, "voy vaciando mi pila mayores"]
-                    cont += 1
-                    insertar_pila(pila_mayores[:tope][:valor], pila)
-                    rows << [cont, "E inserto en pila #{pila_mayores[:tope][:valor]}"]
-                    cont += 1
-                    eliminar_pila(pila_mayores)
-                end
-            end
-        end
-    end
-    vector_fina = []
-    b = pila[:tope]
-    for i in (1 .. pila[:tamaño])
-        vector_fina.push(b[:valor])
-        break if b[:siguiente] == nil
-        b = b[:siguiente]
-    end
-    vector_fina = vector_fina.join(" => ")
-    rows << [cont, "Ordenamiento final: #{vector_fina}"]
-    cont += 1
-    table = Terminal::Table.new :headings => ['Iteración', 'Estructura de datos como iria quedando'],:rows => rows
-    puts table
-    gets
-end
 
+def ordenar_pila(arreglo)
+  limpiar
+  pila = {
+      tope: nil,
+      tamaño: 0
+  }
+  pila_menores = {
+      tope: nil,
+      tamaño: 0
+  }
+  pila_mayores = {
+      tope: nil,
+      tamaño: 0
+  }
+  rows = []
+  for i in (0 .. arreglo.length - 1)
+      vector_final = []
+      if pila[:tope] == nil
+          insertar_pila(arreglo[i], pila)
+          rows << ["#{arreglo[i]}"]
+      else
+          if arreglo[i] >= pila[:tope][:valor]
+              insertar_pila(arreglo[i], pila)
+              a = pila[:tope]
+              for i in (1 .. pila[:tamaño])
+                  vector_final.push(a[:valor])
+                  break if a[:siguiente] == nil
+                  a = a[:siguiente]
+              end
+              vector_final = vector_final.join(" => ")
+              rows << [vector_final]
+          elsif arreglo[i] < pila[:tope][:valor]
+              for i in (1 .. pila[:tamaño])
+                  rows << ["voy vaciando mi pila"]
+                  if pila[:tope][:valor] < arreglo[i]
+                      insertar_pila(pila[:tope][:valor], pila_menores)
+                      eliminar_pila(pila)
+                  elsif pila[:tope][:valor] > arreglo[i]
+                      insertar_pila(pila[:tope][:valor], pila_mayores)
+                      eliminar_pila(pila)
+                  end
+              end
+              for i in (1 .. pila_menores[:tamaño])
+                  rows << ["voy vaciando mi pila menores"]
+                  insertar_pila(pila_menores[:tope][:valor], pila)
+                  rows << [" E inserto en pila#{pila_menores[:tope][:valor]}"]
+                  eliminar_pila(pila_menores)
+              end
+              rows << ["Inserto en mi pila #{arreglo[i]}"]
+              insertar_pila(arreglo[i], pila)
+              for i in (1 .. pila_mayores[:tamaño])
+                  rows << ["voy vaciando mi pila mayores"]
+                  insertar_pila(pila_mayores[:tope][:valor], pila)
+                  rows << ["E inserto en pila #{pila_mayores[:tope][:valor]}"]
+                  eliminar_pila(pila_mayores)
+              end
+          end
+      end
+  end
+  vector_fina = []
+  b = pila[:tope]
+  for i in (1 .. pila[:tamaño])
+      vector_fina.push(b[:valor])
+      break if b[:siguiente] == nil
+      b = b[:siguiente]
+  end
+  vector_fina = vector_fina.join(" => ")
+  rows << ["Ordenamiento final: #{vector_fina}"]
+  table = Terminal::Table.new :headings => ['Iteración', 'Estructura de datos']
+  puts table
+  print "Desea ver el siguiente paso?, si es asi presione cualquier tecla si desa salir presione E "
+  for i in (0 .. rows.size - 1)
+      pregunta = gets.chomp.upcase
+      break if pregunta =='E'
+      tabla = Terminal::Table.new do |t|
+      t.add_row [i + 1, "#{rows[i]}"]
+  end
+      puts tabla
+  end
+  gets
+  limpiar
+end
 
 def obtener_posicion(lista, valor)
     i = 0
@@ -155,10 +155,9 @@ def obtener_posicion(lista, valor)
       i += 1
       aux = aux[:siguiente]
     end
-  
+
     return i
 end
-
 
 def obtener_nodo(lista, posicion)
     nodo = {}
@@ -193,8 +192,8 @@ def ordenar_lista(lista, a)
         nodo_i = {
             valor: a[i],
             siguiente: nli
-        }  
-    end 
+        }
+    end
 
     for i in 0..tamaño do
         if lista[:tamaño] == 0
@@ -207,7 +206,7 @@ def ordenar_lista(lista, a)
                 lista[:tope] = a[i]
                 lista[:final] = a[i-1]
                 lista[:tamaño] += 1
-            end                
+            end
 
         end
     end
@@ -217,44 +216,44 @@ end
 
 def ver(cola)
     limpiar
-    
+
     as = cola[:tope]
     while as[:siguiente] != nil
     puts as[:valor]
-    as=as[:siguiente]     
+    as=as[:siguiente]
     end
     puts as[:valor]
     puts cola[:tope]
 end
 def ver2(cola2)
     limpiar
-    
+
     as = cola2[:tope]
     while as[:siguiente] != nil
     puts as[:valor]
-    as=as[:siguiente]     
+    as=as[:siguiente]
     end
     puts as[:valor]
     puts cola2[:tope]
 end
 def ver3(cola3)
     limpiar
-    
+
     as = cola3[:tope]
     while as[:siguiente] != nil
     puts as[:valor]
-    as=as[:siguiente]     
+    as=as[:siguiente]
     end
     puts as[:valor]
     puts cola3[:tope]
 end
 def ver4(cola4)
     limpiar
-    
+
     as = cola4[:tope]
     while as[:siguiente] != nil
     puts as[:valor]
-    as=as[:siguiente]     
+    as=as[:siguiente]
     end
     puts as[:valor]
     puts cola4[:tope]
@@ -265,64 +264,64 @@ def ordena(cola, cola2, cola3, cola4)
     puts 'Arreglo a ordenar'
     puts 'Forma Asendente'
     puts cola[:tope][:valor]
-    puts  cola2[:tope][:valor] 
-    puts cola3[:tope][:valor] 
+    puts  cola2[:tope][:valor]
+    puts cola3[:tope][:valor]
     puts cola4[:tope][:valor]
     puts '______________________________'
     if cola[:tope][:valor] > cola2[:tope][:valor] && cola[:tope][:valor] > cola3[:tope][:valor] && cola[:tope][:valor] > cola4[:tope][:valor]
-  
+
       if  cola[:tope][:valor] > cola2[:tope][:valor] && cola[:tope][:valor] > cola3[:tope][:valor] && cola[:tope][:valor] > cola4[:tope][:valor]
         puts cola[:tope][:valor]
       end
-    
+
       if  cola2[:tope][:valor] > cola[:tope][:valor] && cola2[:tope][:valor] > cola3[:tope][:valor] && cola2[:tope][:valor] > cola4[:tope][:valor]
         puts cola2[:tope][:valor]
       end
-    
+
       if  cola3[:tope][:valor] > cola[:tope][:valor] && cola3[:tope][:valor] > cola2[:tope][:valor] && cola3[:tope][:valor] > cola4[:tope][:valor]
         puts cola3[:tope][:valor]
-      end 
+      end
       if  cola4[:tope][:valor] > cola[:tope][:valor] && cola4[:tope][:valor] > cola2[:tope][:valor] && cola4[:tope][:valor] > cola3[:tope][:valor]
         puts cola4[:tope][:valor]
-      end 
-      puts '______________________________' 
-      if  cola2[:tope][:valor] > cola3[:tope][:valor] && cola2[:tope][:valor] > cola4[:tope][:valor] 
+      end
+      puts '______________________________'
+      if  cola2[:tope][:valor] > cola3[:tope][:valor] && cola2[:tope][:valor] > cola4[:tope][:valor]
         puts cola2[:tope][:valor]
       end
-      if  cola3[:tope][:valor] > cola2[:tope][:valor] && cola3[:tope][:valor] > cola4[:tope][:valor] 
+      if  cola3[:tope][:valor] > cola2[:tope][:valor] && cola3[:tope][:valor] > cola4[:tope][:valor]
         puts cola3[:tope][:valor]
       end
-      if  cola4[:tope][:valor] > cola2[:tope][:valor] && cola4[:tope][:valor] > cola3[:tope][:valor] 
+      if  cola4[:tope][:valor] > cola2[:tope][:valor] && cola4[:tope][:valor] > cola3[:tope][:valor]
         puts cola4[:tope][:valor]
       end
-      puts '______________________________' 
-      if  cola2[:tope][:valor] > cola3[:tope][:valor] 
+      puts '______________________________'
+      if  cola2[:tope][:valor] > cola3[:tope][:valor]
         puts cola2[:tope][:valor]
       end
-      
-      if  cola3[:tope][:valor] > cola2[:tope][:valor] 
+
+      if  cola3[:tope][:valor] > cola2[:tope][:valor]
         puts cola3[:tope][:valor]
       end
-      puts '______________________________' 
+      puts '______________________________'
       puts cola2[:tope][:valor]
-      puts '______________________________' 
-    end 
+      puts '______________________________'
+    end
     if cola2[:tope][:valor] > cola[:tope][:valor] && cola2[:tope][:valor] > cola3[:tope][:valor] && cola2[:tope][:valor] > cola4[:tope][:valor]
         if  cola2[:tope][:valor] > cola[:tope][:valor] && cola2[:tope][:valor] > cola3[:tope][:valor] && cola2[:tope][:valor] > cola4[:tope][:valor]
             puts cola2[:tope][:valor]
           end
-     puts '______________________________' 
+     puts '______________________________'
           if  cola4[:tope][:valor] > cola[:tope][:valor] && cola4[:tope][:valor] > cola3[:tope][:valor]
             puts cola4[:tope][:valor]
           end
-    puts '______________________________' 
-          if  cola3[:tope][:valor] > cola[:tope][:valor] 
+    puts '______________________________'
+          if  cola3[:tope][:valor] > cola[:tope][:valor]
             puts cola3[:tope][:valor]
-          end 
-     puts '______________________________' 
+          end
+     puts '______________________________'
      puts cola[:tope][:valor]
-     puts '______________________________' 
-    end 
+     puts '______________________________'
+    end
     if cola3[:tope][:valor] > cola[:tope][:valor] && cola3[:tope][:valor] > cola2[:tope][:valor] && cola3[:tope][:valor] > cola4[:tope][:valor]
         if  cola3[:tope][:valor] > cola[:tope][:valor] && cola3[:tope][:valor] > cola2[:tope][:valor] && cola3[:tope][:valor] > cola4[:tope][:valor]
             puts cola3[:tope][:valor]
@@ -331,113 +330,113 @@ def ordena(cola, cola2, cola3, cola4)
      if  cola4[:tope][:valor] > cola[:tope][:valor] && cola4[:tope][:valor] > cola2[:tope][:valor]
         puts cola4[:tope][:valor]
       end
-     puts '______________________________' 
-     if  cola[:tope][:valor] > cola2[:tope][:valor] 
+     puts '______________________________'
+     if  cola[:tope][:valor] > cola2[:tope][:valor]
         puts cola[:tope][:valor]
-      end 
-      puts '______________________________' 
+      end
+      puts '______________________________'
       puts cola2[:tope][:valor]
-      puts '______________________________' 
+      puts '______________________________'
 
-    end 
+    end
     if cola4[:tope][:valor] > cola[:tope][:valor] && cola4[:tope][:valor] > cola2[:tope][:valor] && cola4[:tope][:valor] > cola3[:tope][:valor]
         if  cola4[:tope][:valor] > cola[:tope][:valor] && cola4[:tope][:valor] > cola2[:tope][:valor] && cola4[:tope][:valor] > cola3[:tope][:valor]
             puts cola4[:tope][:valor]
         end
-     puts '______________________________' 
+     puts '______________________________'
      if  cola[:tope][:valor] > cola2[:tope][:valor] && cola[:tope][:valor] > cola3[:tope][:valor]
         puts cola[:tope][:valor]
       end
-     puts '______________________________' 
-    
-    if  cola3[:tope][:valor] > cola2[:tope][:valor] 
-        puts cola3[:tope][:valor]
-      end 
-      puts '______________________________' 
-      puts cola2[:tope][:valor]
-      puts '______________________________' 
+     puts '______________________________'
 
-    end 
-    
-end 
+    if  cola3[:tope][:valor] > cola2[:tope][:valor]
+        puts cola3[:tope][:valor]
+      end
+      puts '______________________________'
+      puts cola2[:tope][:valor]
+      puts '______________________________'
+
+    end
+
+end
 def ordenad(cola, cola2, cola3, cola4)
   limpiar
     puts 'Forma Desendente'
     puts 'Arreglo a ordenar'
-    
+
     puts cola[:tope][:valor]
-    puts  cola2[:tope][:valor] 
-    puts cola3[:tope][:valor] 
+    puts  cola2[:tope][:valor]
+    puts cola3[:tope][:valor]
     puts cola4[:tope][:valor]
     puts '______________________________'
     if cola2[:tope][:valor] < cola[:tope][:valor] && cola2[:tope][:valor] < cola3[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor]
         if  cola2[:tope][:valor] < cola3[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor]
             puts cola2[:tope][:valor]
           end
-          puts '______________________________' 
-          if  cola3[:tope][:valor] < cola[:tope][:valor] && cola3[:tope][:valor] < cola4[:tope][:valor] 
+          puts '______________________________'
+          if  cola3[:tope][:valor] < cola[:tope][:valor] && cola3[:tope][:valor] < cola4[:tope][:valor]
             puts cola3[:tope][:valor]
           end
-          puts '______________________________' 
-          if  cola4[:tope][:valor] < cola[:tope][:valor] 
+          puts '______________________________'
+          if  cola4[:tope][:valor] < cola[:tope][:valor]
             puts cola4[:tope][:valor]
-          end 
-          puts '______________________________' 
+          end
+          puts '______________________________'
           puts cola[:tope][:valor]
-          puts '______________________________' 
-    end 
+          puts '______________________________'
+    end
     if cola[:tope][:valor] < cola2[:tope][:valor] && cola[:tope][:valor] < cola3[:tope][:valor] && cola[:tope][:valor] < cola4[:tope][:valor]
         if  cola[:tope][:valor] < cola2[:tope][:valor] && cola[:tope][:valor] < cola3[:tope][:valor] && cola[:tope][:valor] < cola4[:tope][:valor]
             puts cola[:tope][:valor]
           end
-     puts '______________________________' 
+     puts '______________________________'
      if  cola3[:tope][:valor] < cola2[:tope][:valor] && cola3[:tope][:valor] < cola4[:tope][:valor]
         puts cola3[:tope][:valor]
       end
- puts '______________________________' 
- if  cola4[:tope][:valor] < cola2[:tope][:valor] 
+ puts '______________________________'
+ if  cola4[:tope][:valor] < cola2[:tope][:valor]
     puts cola4[:tope][:valor]
   end
-puts '______________________________' 
+puts '______________________________'
 puts cola2[:tope][:valor]
- puts '______________________________' 
+ puts '______________________________'
 
-    end 
+    end
     if cola2[:tope][:valor] < cola[:tope][:valor] && cola2[:tope][:valor] < cola3[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor]
         if  cola2[:tope][:valor] < cola[:tope][:valor] && cola2[:tope][:valor] < cola3[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor]
             puts cola2[:tope][:valor]
         end
-     puts '______________________________' 
+     puts '______________________________'
      if  cola[:tope][:valor] < cola3[:tope][:valor] && cola[:tope][:valor] < cola4[:tope][:valor]
         puts cola[:tope][:valor]
       end
-     puts '______________________________' 
-     if  cola4[:tope][:valor] < cola3[:tope][:valor] 
+     puts '______________________________'
+     if  cola4[:tope][:valor] < cola3[:tope][:valor]
         puts cola4[:tope][:valor]
-      end 
-      puts '______________________________' 
+      end
+      puts '______________________________'
       puts cola3[:tope][:valor]
-      puts '______________________________' 
-    end 
+      puts '______________________________'
+    end
     if cola2[:tope][:valor] < cola[:tope][:valor] && cola2[:tope][:valor] < cola3[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor]
         if  cola2[:tope][:valor] < cola[:tope][:valor] && cola2[:tope][:valor] < cola3[:tope][:valor] && cola2[:tope][:valor] < cola4[:tope][:valor]
             puts cola2[:tope][:valor]
         end
-     puts '______________________________' 
+     puts '______________________________'
      if  cola3[:tope][:valor] < cola[:tope][:valor] && cola3[:tope][:valor] < cola4[:tope][:valor]
         puts cola3[:tope][:valor]
       end
-      puts '______________________________' 
-      if  cola[:tope][:valor] < cola4[:tope][:valor] 
+      puts '______________________________'
+      if  cola[:tope][:valor] < cola4[:tope][:valor]
         puts cola[:tope][:valor]
-      end 
-      puts '______________________________' 
+      end
+      puts '______________________________'
       puts cola4[:tope][:valor]
-      puts '______________________________' 
-    end 
-   
+      puts '______________________________'
+    end
 
-end 
+
+end
 def insertar (cola)
     limpiar
 
@@ -452,13 +451,13 @@ def insertar (cola)
         cola[:tope] = elemento
         cola[:fondo] = elemento
         cola[:esta_vacia] = false
-        cola[:tamaño] = cola[:tamaño] +1 
-    else 
+        cola[:tamaño] = cola[:tamaño] +1
+    else
 
         aux = cola[:fondo]
         aux[:siguiente] = elemento
         elemento[:siguiente] = nil
-        
+
         cola[:fondo] = elemento
         cola[:tamaño] = cola[:tamaño] +1
     end
@@ -479,13 +478,13 @@ def insertar2 (cola2)
         cola2[:tope] = elemento
         cola2[:fondo] = elemento
         cola2[:esta_vacia] = false
-        cola2[:tamaño] = cola2[:tamaño] +1 
-    else 
+        cola2[:tamaño] = cola2[:tamaño] +1
+    else
 
         aux = cola2[:fondo]
         aux[:siguiente] = elemento
         elemento[:siguiente] = nil
-        
+
         cola2[:fondo] = elemento
         cola2[:tamaño] = cola2[:tamaño] +1
     end
@@ -506,13 +505,13 @@ def insertar3 (cola3)
         cola3[:tope] = elemento
         cola3[:fondo] = elemento
         cola3[:esta_vacia] = false
-        cola3[:tamaño] = cola3[:tamaño] +1 
-    else 
+        cola3[:tamaño] = cola3[:tamaño] +1
+    else
 
         aux = cola3[:fondo]
         aux[:siguiente] = elemento
         elemento[:siguiente] = nil
-        
+
         cola3[:fondo] = elemento
         cola3[:tamaño] = cola2[:tamaño] +1
     end
@@ -533,13 +532,13 @@ def insertar4 (cola4)
         cola4[:tope] = elemento
         cola4[:fondo] = elemento
         cola4[:esta_vacia] = false
-        cola4[:tamaño] = cola4[:tamaño] +1 
-    else 
+        cola4[:tamaño] = cola4[:tamaño] +1
+    else
 
         aux = cola4[:fondo]
         aux[:siguiente] = elemento
         elemento[:siguiente] = nil
-        
+
         cola4[:fondo] = elemento
         cola4[:tamaño] = cola2[:tamaño] +1
     end
@@ -552,7 +551,7 @@ cola = {
     max:-1,
     esta_vacia: true,
     tamaño:0,
-    esta_llena: false     
+    esta_llena: false
 }
 cola2 = {
     fondo: nil,
@@ -560,7 +559,7 @@ cola2 = {
     max:-1,
     esta_vacia: true,
     tamaño:0,
-    esta_llena: false     
+    esta_llena: false
 }
 cola3 = {
     fondo: nil,
@@ -568,7 +567,7 @@ cola3 = {
     max:-1,
     esta_vacia: true,
     tamaño:0,
-    esta_llena: false     
+    esta_llena: false
 }
 cola4 = {
     fondo: nil,
@@ -576,10 +575,10 @@ cola4 = {
     max:-1,
     esta_vacia: true,
     tamaño:0,
-    esta_llena: false     
+    esta_llena: false
 }
-    
-    
+
+
 begin
     puts "Bienvenido al programa para ordenar numeros de diferentes formas"
     puts "Seleccione el número de la opcion deseada"
@@ -590,9 +589,12 @@ begin
     opcion=gets.chomp
     if opcion== '1'
         #Ingreso de numeros en todas las estructuras
-         puts "Ingrese los valores deseados, separandolos por una coma"
+        limpiar
+        puts "Ingrese los valores deseados, separandolos por una coma"
         a = gets.chomp.split(',').map{|n|n.to_i}
         tamaño = a.size
+        gets
+        limpiar
     elsif opcion=='2'
         #Mostrar los datos de forma asendente en diferente estructura
     elsif opcion=='3'
@@ -629,34 +631,34 @@ if opcion == '2'
 end
 if opcion == '3'
     insertar3(cola3)
-end 
+end
 if opcion == '4'
     insertar4(cola4)
-end 
+end
 if opcion == '5'
     ver(cola)
-end 
+end
 if opcion == '6'
     ver2(cola2)
-end 
+end
 if opcion == '7'
     ver3(cola3)
-end 
+end
 if opcion == '8'
     ver4(cola4)
-end 
+end
 if opcion == '9'
     ordena(cola, cola2, cola3,cola4)
     ordenad(cola, cola2,cola3,cola4)
-end 
-end 
+end
+end
 
         elsif opc == 3
             #ordenar paso a paso lista
-        else 
+        else
             puts 'Ingrese nuevamente su opcion'
         end
-    
+
     elsif opcion=='4'
         puts 'Fin del programa'
     end
